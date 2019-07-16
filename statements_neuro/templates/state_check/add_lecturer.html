@@ -1,0 +1,37 @@
+{% extends 'state_check/base.html' %}
+{% load staticfiles %}
+
+    <head>
+        <title>Добавление лектора</title>
+    </head>
+
+    {% block title_block %}
+        Добавление лектора
+    {% endblock %}
+
+{% block body_block %}
+    <h1>Добавление лектора</h1>
+
+        <form id="lecturer_form" method="post" action="/state_check/add_lecturer/" enctype="multipart/form-data">
+        <div class="row">
+        <div class="column column-50">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                    {{ field.errors }}
+                    {{ field.help_text }}
+                    {{ field }}
+                {% endfor %}
+                {{ form.courses }}
+                    </div>
+            </div>
+            <input type="submit" name="submit" value="Добавить лектора" />
+            {% if "ERROR" in status %}
+                <span class="error">Лектор не был сохранен!</span>
+            {% endif %}
+        </form>
+
+
+{% endblock %}

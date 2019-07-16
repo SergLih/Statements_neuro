@@ -1,0 +1,16 @@
+{% extends 'state_check/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {{student.last_name}} {{student.first_name}} {{student.middle_name}} | {{ student.group.name }}
+{% endblock %}
+
+{% block body_block %}
+    <h2>{{student.last_name}} {{student.first_name}} {{student.middle_name}}</h2>
+    <h3>{{ student.group.name }}</h3>
+    <ul>
+    {% for ph in student.photos.all %}
+        <img src="{{ MEDIA_URL }}/{{ph.photo}}" width="250"/> 
+    {% endfor %}
+    </ul>
+{% endblock %}

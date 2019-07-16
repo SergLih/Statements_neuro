@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load i18n %}
+{% language 'ru' %}
+<html>
+    <head>
+        <title>
+            {% block title_block %}Главная{% endblock %} | Посещаемость
+        </title>
+        <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'css/milligram.css' %}">
+        <link rel="stylesheet" href="{% static 'css/my.css' %}">
+    </head>
+    <body>
+    <div class="container">
+
+        <div class="clearfix">
+            <br/>
+            <div class="float-left"><a href="{% url 'index' %}" ><h1 class="site-title">Посещаемость<br/>студентов</h1></a></div>
+
+        </div>
+
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+        <hr/>
+        <!-- <div class="footer">
+            { if user.is_authenticated %}
+                Вы вошли на сайт как {{ user.username }}.
+                <a class="button button-clear" href="{ url 'student/add' %}">Добавить студента</a>
+                <a class="button button-clear" href="{ url 'auth_logout' %}?next=/rango/">Выйти</a>
+            { else %}
+                <a class="button button-clear" href="{ url 'auth_login' %}">Войти</a>
+                <a class="button button-clear" href="{ url 'registration_register' %}">Зарегистрироваться</a>
+            { endif %}
+        </div> -->
+    </div>
+    </body>
+</html>
+{% endlanguage %}

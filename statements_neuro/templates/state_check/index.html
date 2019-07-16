@@ -1,0 +1,14 @@
+{% extends 'state_check/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Главная
+{% endblock %}
+
+{% block body_block %}
+    <h2>Посещаемость студентов</h2>
+    <a class="button" href="{% url 'add_lecture' %}">Заполнить посещаемость</a>
+    <a class="button" href="{% url 'add_student' %}">Добавить студента</a>
+
+
+{% endblock %}

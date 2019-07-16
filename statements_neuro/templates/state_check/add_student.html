@@ -1,0 +1,42 @@
+{% extends 'state_check/base.html' %}
+{% load staticfiles %}
+
+    <head>
+        <title>Добавление студента</title>
+    </head>
+
+    {% block title_block %}
+        Добавление студента
+    {% endblock %}
+
+{% block body_block %}
+    <h1>Добавление студента</h1>
+    <div class="row">
+    <div class="column column-50">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for hidden in form.hidden_fields %}
+          {{ hidden }}
+      {% endfor %}
+      {% for field in form.visible_fields %}
+          {{ field.errors }}
+          {{ field.help_text }}
+          {{ field }}
+      {% endfor %}
+
+      Фотографии (можно выбрать несколько)
+      <input type="file" name="images" multiple>
+      <!-- {{ formset.management_form }}
+      {% for f in formset %}
+        {{ f.as_p }}
+      {% endfor %} -->
+      <input type="submit" name="submit" value="Добавить студента" />
+      {% if "ERROR" in status %}
+          <span class="error">Студент не был сохранен!</span>
+      {% endif %}
+    </form>
+    </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'state_check/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {{lecture.subject}} {{lecture.topic}}
+{% endblock %}
+
+{% block body_block %}
+    <div class="row">
+    <div class="column column-70">
+    <table>
+      <tr><th width="30%">Предмет: </th><td>{{lecture.subject}}</td></tr>
+      <tr><th>Тема лекции:</th><td>{{lecture.topic}}</td></tr>
+      <tr><th>Дата лекции:</th><td>{{lecture.date_time|date:'d E Y H:i'}}</td></tr>
+      <tr><th>Преподаватель:</th><td>{{lecture.lecturer.last_name}} {{lecture.lecturer.first_name}} {{lecture.lecturer.middle_name}}</td></tr>
+      <tr><th>Группа:</th><td>{{ lecture.group.name }}</td></tr>
+    </table>
+
+    {% if lecture.photo_faces %}
+    <p>Фото аудитории с распознанными лицами (нажмите, чтобы открыть в полном размере)</p>
+      <a href="{{ MEDIA_URL }}/{{lecture.photo_faces}}" target="_blank">
+        <img src="{{ MEDIA_URL }}/{{lecture.photo_faces}}" width="950"/>
+      </a>
+    {% else %}
+      <p>Фото аудитории <b><span style="color:red;">(проблема с распознающим сервером, заполните список слева вручную)</span></b></p>
+      <img src="{{ MEDIA_URL }}/{{lecture.photo_aud}}" width="950"/>
+    {% endif %}
+
+    </div>
+    <div class="column column-20" style="margin-left: 30px;border: grey 1px solid; padding: 20px;">
+      <h4>Список студентов</h4>
+      <form action="{% url 'edit_attendance' id=lecture.id %}" method="post">
+        {% csrf_token %}
+        <ul style="list-style:none;">
+          {% for s in lecture.group.students.all %}
+            <li style="margin-bottom:0;">
+              <input id="{{ s.short_name }}" name="{{ s.short_name }}" type="checkbox" {% if s in lecture.students.all %} checked="checked" {% endif %}>
+              <label class="label-inline" for="{{s.short_name}}">{{ s.last_name }} {{s.first_name |slice:"0:1"}}. {{s.middle_name |slice:"0:1"}}.</label>
+            </li>
+          {% endfor %}
+          <p style="font-size:0.8em;">Если Вы откорректировали посещаемость, заполненную автоматически, нажмите</p>
+          <input type="submit" name="submit" value="Сохранить" />
+        </ul>
+      </form>
+    </div>
+  </div>
+    <!--<h3> </h3>
+    <h3> </h3>
+    <h3> </h3> -->
+
+{% endblock %}
